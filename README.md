@@ -6,10 +6,9 @@ Simulador del modelo de ecuaciones diferenciales Hodgkin-Huxley
 
 * [Spyder - Anaconda Distribution](https://www.anaconda.com/download/)
 
-## Authors
+## Author
 
 * **Adrián García** 
-* **Juan David Rodríguez** 
 
 ## License
 
