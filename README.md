@@ -1,4 +1,4 @@
-# Simulador modelo Hodgkin-Huxley 
+# Simulator model Hodgkin-Huxley 
 
 Simulador del modelo de ecuaciones diferenciales Hodgkin-Huxley 
 
@@ -8,7 +8,7 @@ Simulador del modelo de ecuaciones diferenciales Hodgkin-Huxley
 
 ## Author
 
-* **Adrián García** 
+* **Adrian Garcia** 
 
 ## License
 
