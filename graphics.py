@@ -5,36 +5,36 @@ Created on Tue May  1 12:17:03 2018
 @author: adrian
 """
 
-from tkinter import Button, TOP, BOTH, BOTTOM, LEFT, RIGHT, CENTER, filedialog
+from tkinter import Button, TOP, BOTH, LEFT, RIGHT, CENTER, filedialog
 
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2TkAgg)
 # Implement the default Matplotlib key bindings.
 from matplotlib.backend_bases import key_press_handler
 
-from modelo import resolverModeloHodgkinHuxley
+from model import resolveHodgkinHuxleyModel
 
 import pylab as plt
 import scipy as sp
 
-class GUIgraficas:
+class guiGraphics:
     
-    def __init__(self, master, C_m, g_Na, g_K, g_L, E_Na, E_K, E_L, tI, tF, cI, aux1, aux2, tipoCorriente):
+    def __init__(self, master, C_m, g_Na, g_K, g_L, E_Na, E_K, E_L, tI, tF, cI, aux1, aux2, currentType):
         
         self.master = master
-        self.master.title("Gráficas")
+        self.master.title("Graphics")
         self.cI = cI
         self.aux1 = aux1
         self.aux2 = aux2
         self.tF = tF
         self.tI = tI
-        self.tipoCorriente = tipoCorriente
-        self.V, self.m, self.h, self.n, self.t = resolverModeloHodgkinHuxley(C_m, g_Na, g_K, g_L, E_Na, E_K, E_L, tI, tF, cI, aux1, aux2, tipoCorriente)
+        self.currentType = currentType
+        self.V, self.m, self.h, self.n, self.t = resolveHodgkinHuxleyModel(C_m, g_Na, g_K, g_L, E_Na, E_K, E_L, tI, tF, cI, aux1, aux2, currentType)
 
         self.fig = plt.figure(num=None, figsize=(12, 6), dpi=90, facecolor='w', edgecolor='k')
         
         plt.subplot(3,1,1)
-        plt.title('Dinámica modelo Hodgkin-Huxley')
+        plt.title('Dynamics Hodgkin-Huxley model')
         plt.plot(self.t, self.V, 'k')
         plt.ylabel('V (mV)')
         
@@ -42,7 +42,7 @@ class GUIgraficas:
         plt.plot(self.t, self.m, 'r', label='m')
         plt.plot(self.t, self.h, 'g', label='h')
         plt.plot(self.t, self.n, 'b', label='n')
-        plt.ylabel('Valor de activación')
+        plt.ylabel('Activation value')
         plt.legend()
         
         t = sp.arange(tI, tF, 0.1)
@@ -64,11 +64,11 @@ class GUIgraficas:
         
         self.canvas.mpl_connect("key_press_event", self.on_key_press)
         
-        buttonCerrar = Button(master=master, width=32, text="Cerrar", command=self.cerrar)
-        buttonCerrar.pack(side=RIGHT)
+        buttonClose = Button(master=master, width=32, text="Close", command=self.close)
+        buttonClose.pack(side=RIGHT)
         
-        buttonImprimirDatos = Button(master=master, width=32, text="Guardar datos", command=self.guardarDatos)
-        buttonImprimirDatos.pack(side=LEFT, anchor=CENTER)
+        buttonPrintData = Button(master=master, width=32, text="Save data", command=self.guardarDatos)
+        buttonPrintData.pack(side=LEFT, anchor=CENTER)
         
         self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
         
@@ -76,7 +76,7 @@ class GUIgraficas:
         print("you pressed {}".format(event.key))
         key_press_handler(event, self.canvas, self.toolbar)        
         
-    def cerrar(self):
+    def close(self):
         self.master.quit()     # stops mainloop
         self.master.destroy()  # this is necessary on Windows to prevent
                             # Fatal Python Error: PyEval_RestoreThread: NULL tstate    
@@ -86,8 +86,8 @@ class GUIgraficas:
         
     def guardarDatos(self):
         self.master.filename = filedialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("csv file","*.csv"),("all files","*.*")))
-        direccion = self.master.filename + '.csv'
-        f= open(direccion,'w+')
+        direction = self.master.filename + '.csv'
+        f= open(direction,'w+')
         f.write( 't, V, m, h, n\n' )
         for i in range(self.t.size):
             string = str(self.t[i])+','+str(self.V[i])+','+str(self.m[i])+','+str(self.h[i])+','+str(self.n[i])+'\n'
@@ -95,17 +95,17 @@ class GUIgraficas:
         f.close()
         
     def I_entrada(self, t):
-        if(self.tipoCorriente == 1): #discreto
-            expresion = self.cI*(t>self.aux1)- self.cI*(t>self.aux2)
+        if(self.currentType == 1): #discrete
+            expression = self.cI*(t>self.aux1)- self.cI*(t>self.aux2)
         else:
-            if(self.tipoCorriente == 2): #continuo
-                expresion = self.cI*(t>0)
-            else: # aumento        
-                expresion = self.cI*(t>0)
+            if(self.currentType == 2): #continuous
+                expression = self.cI*(t>0)
+            else: # increase        
+                expression = self.cI*(t>0)
                 if(self.aux1>0 and self.aux2>0):
-                    contador = 0
-                    while(contador<=self.tF):
-                        contador += self.aux2
-                        expresion += self.aux1*(t>contador)
+                    counter = 0
+                    while(counter<=self.tF):
+                        counter += self.aux2
+                        expression += self.aux1*(t>counter)
                         
-        return expresion
+        return expression

@@ -8,7 +8,7 @@ Created on Sun Apr 29 18:16:10 2018
 import scipy as sp
 from scipy.integrate import odeint
 
-def resolverModeloHodgkinHuxley(C_m, g_Na, g_K, g_L, E_Na, E_K, E_L, tI, tF, cI, aux1, aux2, tipoCorriente):
+def resolveHodgkinHuxleyModel(C_m, g_Na, g_K, g_L, E_Na, E_K, E_L, tI, tF, cI, aux1, aux2, currentType):
 
     # Channel gating kinetics
     # Functions of membrane voltage
@@ -37,34 +37,34 @@ def resolverModeloHodgkinHuxley(C_m, g_Na, g_K, g_L, E_Na, E_K, E_L, tI, tF, cI,
         return g_L * (V - E_L)
     
     # External current
-    def I_externa(t):        
-        if(tipoCorriente == 1): #discreto
-            expresion = cI*(t>aux1)- cI*(t>aux2)
+    def I_external(t):        
+        if(currentType == 1): #discreto
+            expression = cI*(t>aux1)- cI*(t>aux2)
         else:
-            if(tipoCorriente == 2): #continuo
-                expresion = cI*(t>0)
+            if(currentType == 2): #continuo
+                expression = cI*(t>0)
             else: # aumento        
-                expresion = cI*(t>0)
+                expression = cI*(t>0)
                 if(aux1>0 and aux2>0):
-                    contador = 0
-                    while(contador<=tF):
-                        contador += aux2
-                        expresion += aux1*(t>contador)
+                    counter = 0
+                    while(counter<=tF):
+                        counter += aux2
+                        expression += aux1*(t>counter)
                         
-        return expresion
+        return expression
     
-    def ecuacionesGenerales(X, t):
+    def generalEquations(X, t):
         V, m, h, n = X
         
         #calculate membrane potential & activation variables
-        dVdt = (I_externa(t) - I_Na(V, m, h) - I_K(V, n) - I_L(V)) / C_m
+        dVdt = (I_external(t) - I_Na(V, m, h) - I_K(V, n) - I_L(V)) / C_m
         dmdt = alpha_m(V)*(1.0-m) - beta_m(V)*m
         dhdt = alpha_h(V)*(1.0-h) - beta_h(V)*h
         dndt = alpha_n(V)*(1.0-n) - beta_n(V)*n
         return dVdt, dmdt, dhdt, dndt
     
     t = sp.arange(tI, tF, 0.1) # The time to integrate over
-    X = odeint(ecuacionesGenerales, [-65, 0.05, 0.6, 0.32], t)    
+    X = odeint(generalEquations, [-65, 0.05, 0.6, 0.32], t)    
     V = X[:,0]
     m = X[:,1]
     h = X[:,2]
