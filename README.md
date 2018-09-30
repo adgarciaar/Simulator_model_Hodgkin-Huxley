@@ -12,4 +12,4 @@ Simulador del modelo de ecuaciones diferenciales Hodgkin-Huxley
 
 ## License
 
-This project is licensed under the GNU GPLv3 License - see the [LICENSE.md](https://github.com/adgarciaar/NumericalAnalysis/blob/master/Simulador%20modelo%20Hodgkin-Huxley/LICENSE) file for details
+This project is licensed under the GNU GPLv3 License - see the [LICENSE.md](https://github.com/adgarciaar/Simulator_model_Hodgkin-Huxley/blob/master/LICENSE) file for details
