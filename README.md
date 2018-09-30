@@ -1,6 +1,6 @@
 # Simulator model Hodgkin-Huxley 
 
-Simulador del modelo de ecuaciones diferenciales Hodgkin-Huxley 
+Simulator model Hodgkin-Huxley (differential equations)
 
 ## Built With
 
