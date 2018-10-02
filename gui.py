@@ -45,7 +45,7 @@ class GUI:
         self.txt_KPotential = Entry(master,width=6)
         self.txt_LPotential = Entry(master,width=6)
         
-        self.label_settings = Label(master, text="Setting")
+        self.label_settings = Label(master, text="Settings")
         
         self.label_startTime = Label(master, text="Start time (ms)")
         self.label_endTime = Label(master, text="End time (ms)")

@@ -8,7 +8,7 @@ Created on Tue May  1 12:17:03 2018
 from tkinter import Button, TOP, BOTH, LEFT, RIGHT, CENTER, filedialog
 
 from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2TkAgg)
+    FigureCanvasTkAgg, NavigationToolbar2Tk)
 # Implement the default Matplotlib key bindings.
 from matplotlib.backend_bases import key_press_handler
 
@@ -58,7 +58,7 @@ class guiGraphics:
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
         
-        self.toolbar = NavigationToolbar2TkAgg(self.canvas, master)
+        self.toolbar = NavigationToolbar2Tk(self.canvas, master)
         self.toolbar.update()
         self.canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=1)     
         
