@@ -2,7 +2,7 @@
 """
 Created on Sun Apr 29 18:16:10 2018
 
-@author: adrian
+@author: adgarciaar
 """
 
 import scipy as sp

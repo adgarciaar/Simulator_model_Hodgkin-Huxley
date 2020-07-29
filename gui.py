@@ -2,7 +2,7 @@
 """
 Created on Sun Apr 29 17:53:04 2018
 
-@author: adrian
+@author: adgarciaar
 """
 
 from tkinter import Tk, Label, Button, Entry, messagebox, Radiobutton, IntVar

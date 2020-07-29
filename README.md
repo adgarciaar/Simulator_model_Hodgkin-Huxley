@@ -2,7 +2,7 @@
 
 Simulator model Hodgkin-Huxley
 
-## Built With
+## Built with
 
 * [Spyder - Anaconda Distribution](https://www.anaconda.com/download/)
 
