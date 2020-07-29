@@ -2,7 +2,7 @@
 """
 Created on Tue May  1 12:17:03 2018
 
-@author: adgarciar
+@author: adrian
 """
 
 from tkinter import Button, TOP, BOTH, LEFT, RIGHT, CENTER, filedialog
